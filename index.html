@@ -7,15 +7,62 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
     <script src="script.js" defer></script>
-    <title>Snake Game</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@400;700&display=swap"
+        rel="stylesheet">
+    <title>SNAKE HUNTER</title>
 </head>
 
 <body>
-    <h2>Snake Game</h2>
-    <div id="msg">Press space to pause or continue</div>
-    <div id="container">
-        <canvas id="gameBoard" width="500" height="500"></canvas>
-        <div id="score">Score: <span id="scoreVal">0</span></div>
+    <div id="start-popup" class="popup-active popup-modal">
+        <div class="popup-overlay popup-start">
+            <h2>🐍 Welcome to SNAKE HUNTER 🍎</h2>
+            <button id="start-button" class="btn-sm">Start Game</button>
+        </div>
+    </div>
+
+    <div id="gameover-popup" class="popup-hidden popup-modal">
+        <div class="popup-overlay">
+            <h2>GAME OVER!</h2>
+            <p>Your Score: <span id="finalScoreVal">0</span></p>
+            <div class="popup-buttons btn-lg-group">
+                <button id="newgame-button" class="btn-lg">New Game</button>
+                <button id="quit-button" class="btn-lg">Quit</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="confirm-popup" class="popup-hidden popup-modal">
+        <div class="popup-overlay">
+            <h2 id="confirm-message"></h2>
+            <div class="popup-buttons btn-lg-group">
+                <button id="confirm-yes-button" class="btn-lg"></button>
+                <button id="confirm-no-button" class="btn-lg"></button>
+            </div>
+        </div>
+    </div>
+
+    <div id="grass-area">
+        <h1>SNAKE HUNTER</h1>
+
+        <div id="main-content-wrapper">
+
+            <div id="container">
+                <canvas id="gameBoard" width="500" height="500"></canvas>
+            </div>
+
+            <div id="sidebar">
+                <h3>Instructions</h3>
+                <div id="msg">Use ARROW KEYS to move.</div>
+
+                <div id="sidebar-score">Score: <span id="scoreVal">0</span></div>
+
+                <h3>Controls</h3>
+                <button id="pause-button" class="control-btn">Pause</button>
+                <button id="new-game-button" class="control-btn">New Game</button>
+                <button id="quit-app-button" class="control-btn">Quit Game</button>
+            </div>
+        </div>
     </div>
 </body>
 
