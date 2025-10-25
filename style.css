@@ -1,23 +1,267 @@
+/** @format */
+
+:root {
+  --color-pastel-blue: #caecfa;
+  --color-pastel-green: #d9f7d9;
+  --color-pastel-yellow: #fffacd;
+  --color-sand: #e7d4a8;
+  --color-grass: #5cb85c;
+  --color-brick-dark: #694c4c;
+  --color-popup-dark: #ebc7e6;
+
+  --font-title: "Playfair Display", serif;
+  --font-body: "Roboto", sans-serif;
+}
+
 * {
   margin: 0;
   padding: 0;
-  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
-  background-color: #f5e8ba;
+  font-family: var(--font-body);
   text-align: center;
+  box-sizing: border-box;
 }
 
-h2 {
-  color: darkgreen;
-}
-#msg {
-  margin-bottom: 1em;
+body {
+  background-color: var(--color-grass);
+  background-image: repeating-linear-gradient(
+    45deg,
+    rgba(255, 255, 255, 0.05) 0,
+    rgba(255, 255, 255, 0.05) 5px,
+    transparent 5px,
+    transparent 10px
+  );
+  padding: 20px;
+  min-height: 100vh;
+}
+
+h1 {
+  font-family: var(--font-title);
+  color: var(--color-pastel-yellow);
+  margin-bottom: 20px;
+  font-size: 3.5em;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* Layout: Center Playfield, Move Sidebar to Right */
+#main-content-wrapper {
+  position: relative;
+  display: block;
+  width: 100%;
+}
+
+#container {
+  margin: 0 auto;
+  width: 500px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
 }
 
 #gameBoard {
-  border: 3px solid;
+  border: 15px solid var(--color-brick-dark);
 }
 
-#score {
-  margin-top: 1em;
-  font-size: 2em;
+/* Sidebar Styling (Instruction Box) */
+#sidebar {
+  position: absolute;
+  right: 50px;
+  top: 100px;
+  width: 200px;
+  padding: 20px;
+  background-color: rgba(0, 0, 0, 0.4);
+  border-radius: 10px;
+  text-align: left;
+  color: white;
+}
+
+#sidebar h3 {
+  font-family: var(--font-title);
+  font-size: 1.2em;
+  margin-top: 15px;
+  margin-bottom: 5px;
+  color: var(--color-pastel-yellow);
+}
+
+#msg {
+  color: var(--color-pastel-green);
+  font-size: 0.9em;
+  margin-bottom: 15px;
+  font-weight: bold;
+}
+
+#sidebar-score {
+  font-family: var(--font-title);
+  font-size: 1.5em;
+  color: rgb(223, 223, 223);
+  margin-bottom: 25px;
+  border-top: 1px dashed rgba(255, 255, 255, 0.5);
+  padding-top: 10px;
+}
+
+.control-btn {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  font-size: 1em;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  background-color: var(--color-pastel-blue);
+  color: #333;
+  transition: background-color 0.2s;
+  font-weight: 700;
+}
+
+/* Popup Styling: Full-screen Modal Overlay */
+.popup-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: opacity 0.3s ease;
+}
+
+.popup-overlay {
+  background-color: var(--color-pastel-blue);
+  color: #333;
+  padding: 40px 60px;
+  border-radius: 15px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+}
+
+.popup-start {
+  background-color: var(--color-popup-dark);
+}
+
+.popup-active {
+  opacity: 1 !important;
+  pointer-events: all;
+  visibility: visible !important;
+}
+
+.popup-hidden {
+  opacity: 0 !important;
+  pointer-events: none;
+  visibility: hidden !important;
+}
+
+#start-popup h2,
+#gameover-popup h2,
+#confirm-popup h2 {
+  font-family: var(--font-title);
+  color: #333;
+  margin-bottom: 20px;
+  font-size: 2.5em;
+  background-color: transparent;
+}
+
+/* Button Sizing and Spacing */
+.btn-sm {
+  padding: 10px 20px;
+  font-size: 1.1em;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  background-color: var(--color-pastel-green);
+  color: #333;
+  font-weight: 700;
+}
+
+.btn-lg {
+  padding: 15px 30px;
+  font-size: 1.3em;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  background-color: var(--color-pastel-green);
+  color: #333;
+  font-weight: 700;
+}
+
+.btn-lg-group {
+  display: flex;
+  gap: 30px;
+  margin-top: 20px;
+  justify-content: center; /* Centers the buttons horizontally */
+}
+
+/* ****************************************************** */
+/* --- MOBILE RESPONSIVE STYLES (Screen size < 768px) --- */
+/* ****************************************************** */
+
+@media (max-width: 768px) {
+  body {
+    padding: 10px;
+  }
+
+  h1 {
+    font-size: 2.5em;
+    margin-bottom: 15px;
+  }
+
+  /* 1. Reset main wrapper and container for stacking */
+  #main-content-wrapper {
+    display: flex;
+    flex-direction: column; /* Stack elements vertically */
+    align-items: center; /* Center them horizontally */
+  }
+
+  /* 2. Resize Playfield */
+  #container {
+    width: 95vw; /* Take up most of the viewport width */
+    max-width: 400px; /* Keep it reasonable on tablets */
+    margin: 0 auto 20px; /* Center it, add space below */
+  }
+
+  /*  Resize the Canvas to fit the new container width */
+  #gameBoard {
+    width: 100%;
+    height: auto;
+    border-width: 10px;
+  }
+
+  /* 3. Reposition and adjust Sidebar */
+  #sidebar {
+    position: static; /* Remove absolute positioning, let it flow below #container */
+    margin-top: 20px;
+    width: 95vw;
+    max-width: 400px;
+    padding: 15px;
+  }
+
+  /* 4. Adjust Popup sizes for smaller screens */
+  .popup-overlay {
+    padding: 30px 40px;
+    max-width: 90%;
+  }
+
+  #start-popup h2,
+  #gameover-popup h2,
+  #confirm-popup h2 {
+    font-size: 1.8em;
+  }
+
+  .btn-sm {
+    font-size: 1em;
+  }
+
+  .btn-lg {
+    padding: 12px 20px;
+    font-size: 1.1em;
+  }
+
+  .btn-lg-group {
+    gap: 20px;
+  }
 }
